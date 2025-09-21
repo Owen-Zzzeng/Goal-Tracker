@@ -1,0 +1,128 @@
+// Prisma schema for Goal Tracker
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Status {
+  UNBEGUN
+  IN_PROGRESS
+  PAUSED
+  COMPLETE
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String?
+
+  visions      Vision[]
+  goals        Goal[]
+  letters      FutureLetter[]
+  summaries    QuarterlySummary[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Vision {
+  id           String   @id @default(cuid())
+  user         User     @relation(fields: [userId], references: [id])
+  userId       String
+
+  learn        String?
+  have         String?
+  be           String?
+  try          String?
+  see          String?
+  do           String?
+  go           String?
+  create       String?
+  contribute   String?
+  overcome     String?
+  oneDay       String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Goal {
+  id                     String   @id @default(cuid())
+  user                   User     @relation(fields: [userId], references: [id])
+  userId                 String
+  title                  String
+  why                    String?
+  expectedCompletionDate DateTime
+  startDate              DateTime?
+  completedAt            DateTime?
+  status                 Status   @default(UNBEGUN)
+
+  strategies Strategy[]
+  milestones Milestone[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Strategy {
+  id         String  @id @default(cuid())
+  goal       Goal    @relation(fields: [goalId], references: [id])
+  goalId     String
+  title      String
+  startDate  DateTime?
+  completedAt DateTime?
+  status     Status  @default(UNBEGUN)
+
+  actions ActionStep[]
+}
+
+model ActionStep {
+  id          String  @id @default(cuid())
+  strategy    Strategy @relation(fields: [strategyId], references: [id])
+  strategyId  String
+  description String
+  startDate   DateTime?
+  completedAt DateTime?
+  status      Status  @default(UNBEGUN)
+}
+
+model Milestone {
+  id        String  @id @default(cuid())
+  goal      Goal    @relation(fields: [goalId], references: [id])
+  goalId    String
+  note      String
+  reachedAt DateTime @default(now())
+}
+
+model FutureLetter {
+  id            String   @id @default(cuid())
+  user          User     @relation(fields: [userId], references: [id])
+  userId        String
+  content       String
+  deliverOn     DateTime
+  deliveredAt   DateTime?
+  deliveryEmail String?
+  createdAt     DateTime @default(now())
+}
+
+model QuarterlySummary {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  quarter   Int
+  year      Int
+  achievements String?
+  reflection   String?
+  createdAt DateTime @default(now())
+  @@unique([userId, year, quarter])
+}
+
+
+
+
+
