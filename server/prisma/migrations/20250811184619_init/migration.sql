@@ -117,22 +117,43 @@ CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 CREATE UNIQUE INDEX "QuarterlySummary_userId_year_quarter_key" ON "QuarterlySummary"("userId", "year", "quarter");
 
 -- AddForeignKey
-ALTER TABLE "Vision" ADD CONSTRAINT "Vision_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Vision" 
+ADD CONSTRAINT "Vision_userId_fkey" 
+FOREIGN KEY ("userId") REFERENCES "User"("id") 
+ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Goal" ADD CONSTRAINT "Goal_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Goal" 
+ADD CONSTRAINT "Goal_userId_fkey" 
+FOREIGN KEY ("userId") REFERENCES "User"("id") 
+ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Strategy" ADD CONSTRAINT "Strategy_goalId_fkey" FOREIGN KEY ("goalId") REFERENCES "Goal"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Strategy" 
+ADD CONSTRAINT "Strategy_goalId_fkey" 
+FOREIGN KEY ("goalId") REFERENCES "Goal"("id") 
+ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "ActionStep" ADD CONSTRAINT "ActionStep_strategyId_fkey" FOREIGN KEY ("strategyId") REFERENCES "Strategy"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "ActionStep" 
+ADD CONSTRAINT "ActionStep_strategyId_fkey" 
+FOREIGN KEY ("strategyId") REFERENCES "Strategy"("id") 
+ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Milestone" ADD CONSTRAINT "Milestone_goalId_fkey" FOREIGN KEY ("goalId") REFERENCES "Goal"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Milestone" 
+ADD CONSTRAINT "Milestone_goalId_fkey" 
+FOREIGN KEY ("goalId") REFERENCES "Goal"("id") 
+ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "FutureLetter" ADD CONSTRAINT "FutureLetter_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "FutureLetter" 
+ADD CONSTRAINT "FutureLetter_userId_fkey" 
+FOREIGN KEY ("userId") REFERENCES "User"("id") 
+ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "QuarterlySummary" ADD CONSTRAINT "QuarterlySummary_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "QuarterlySummary" 
+ADD CONSTRAINT "QuarterlySummary_userId_fkey"
+FOREIGN KEY ("userId") REFERENCES "User"("id") 
+ON DELETE RESTRICT ON UPDATE CASCADE;
