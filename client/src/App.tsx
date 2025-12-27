@@ -1,5 +1,5 @@
+import React, { useEffect, useState } from 'react'
 import { Route, Routes, Navigate } from 'react-router-dom'
-import { useEffect, useState } from 'react'
 import { LoginPage } from './pages/LoginPage'
 import { RegisterPage } from './pages/RegisterPage'
 import { LandingPage } from './pages/LandingPage'
@@ -7,6 +7,7 @@ import { VisionWizardPage } from './pages/VisionWizardPage'
 import { GoalsSetupPage } from './pages/GoalsSetupPage'
 import { RegistrationPromptPage } from './pages/RegistrationPromptPage'
 import { CreateGoalPage } from './pages/CreateGoalPage'
+import { SetupGoalPage } from './pages/SetupGoalPage'
 import { DashboardPage } from './pages/DashboardPage'
 
 export default function App() {
@@ -29,6 +30,7 @@ export default function App() {
       <Route path="/register" element={<RegisterPage setIsAuthenticated={setIsAuthenticated} />} />
       <Route path="/vision" element={<VisionWizardPage />} />
       <Route path="/goals-setup" element={<GoalsSetupPage />} />
+      <Route path="/setup-goal" element={<SetupGoalPage />} />
       <Route path="/register-prompt" element={<RegistrationPromptPage />} />
       <Route path="/create-goal" element={<CreateGoalPage />} />
       <Route path="/dashboard" element={<DashboardPage setIsAuthenticated={setIsAuthenticated} />} />

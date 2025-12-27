@@ -31,8 +31,14 @@ goalsRouter.post('/', requireAuth, async (req: any, res) => {
       return res.status(400).json({ error: 'Title is required' });
     }
     
-    const goalCount = await prisma.goal.count({ where: { userId: req.userId } });
-    if (goalCount >= 5) return res.status(400).json({ error: 'Maximum of five goals reached' });
+    // Count only active goals (not COMPLETE)
+    const activeGoalCount = await prisma.goal.count({ 
+      where: { 
+        userId: req.userId,
+        status: { not: Status.COMPLETE }
+      } 
+    });
+    if (activeGoalCount >= 5) return res.status(400).json({ error: 'You already have 5 active goals. Please complete at least one goal before adding a new one.' });
 
     const goal = await prisma.goal.create({
       data: {

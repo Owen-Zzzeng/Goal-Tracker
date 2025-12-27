@@ -17,15 +17,15 @@ export function RegisterPage({ setIsAuthenticated }: { setIsAuthenticated: (auth
     try {
       // Register the user
       const registerResponse = await api.post('/auth/register', { email, password, name })
-      
+
       // Get stored data from localStorage
       const visionData = localStorage.getItem('userVision')
       const goalsData = localStorage.getItem('userGoals')
-      
+
       if (registerResponse.data.token) {
         // Store the token
         localStorage.setItem('token', registerResponse.data.token)
-        
+
         // Save vision data to database
         if (visionData) {
           try {
@@ -34,26 +34,26 @@ export function RegisterPage({ setIsAuthenticated }: { setIsAuthenticated: (auth
             console.error('Failed to save vision:', err)
           }
         }
-        
-              // Save goals data to database
-      if (goalsData) {
-        try {
-          const goals = JSON.parse(goalsData)
-          console.log('Saving goals to database:', goals)
-          for (const goal of goals) {
-            const response = await api.post('/goals', goal)
-            console.log('Goal saved:', response.data)
+
+        // Save goals data to database
+        if (goalsData) {
+          try {
+            const goals = JSON.parse(goalsData)
+            console.log('Saving goals to database:', goals)
+            for (const goal of goals) {
+              const response = await api.post('/goals', goal)
+              console.log('Goal saved:', response.data)
+            }
+          } catch (err: any) {
+            console.error('Failed to save goals:', err)
+            console.error('Error details:', err.response?.data)
           }
-        } catch (err) {
-          console.error('Failed to save goals:', err)
-          console.error('Error details:', err.response?.data)
         }
-      }
-        
+
         // Clear localStorage data since it's now in the database
         localStorage.removeItem('userVision')
         localStorage.removeItem('userGoals')
-        
+
         setIsAuthenticated(true)
         setSuccess('Account created and data saved! Redirecting to dashboard...')
         setTimeout(() => navigate('/dashboard'), 1000)
@@ -62,7 +62,19 @@ export function RegisterPage({ setIsAuthenticated }: { setIsAuthenticated: (auth
         setTimeout(() => navigate('/login'), 500)
       }
     } catch (err: any) {
-      setError(err?.response?.data?.error || 'Registration failed')
+      console.error('Registration error:', err);
+      // Handle different error types
+      if (err.response) {
+        // Server responded with error
+        const errorMessage = err.response.data?.error || err.response.data?.message || 'Registration failed. Please try again.';
+        setError(errorMessage);
+      } else if (err.request) {
+        // Request was made but no response received
+        setError('Unable to connect to server. Please check your connection.');
+      } else {
+        // Something else happened
+        setError(err.message || 'Registration failed. Please try again.');
+      }
     }
   }
 

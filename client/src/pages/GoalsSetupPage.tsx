@@ -10,6 +10,7 @@ export function GoalsSetupPage() {
       setVisionData(JSON.parse(savedVision))
     }
   }, [])
+
   return (
     <div className="goals-setup-container">
       <div className="goals-setup-content">
@@ -18,7 +19,7 @@ export function GoalsSetupPage() {
         <p className="setup-subtitle">
           Now let's break down your five-year fantasy into actionable goals you want to achieve this year.
         </p>
-        
+
         {visionData && (
           <div className="vision-summary">
             <h3>Your Vision Summary:</h3>
@@ -37,7 +38,7 @@ export function GoalsSetupPage() {
             </div>
           </div>
         )}
-        
+
         <div className="setup-info">
           <h3>What's Next?</h3>
           <ul>
@@ -47,9 +48,9 @@ export function GoalsSetupPage() {
             <li>Set completion dates and track your progress</li>
           </ul>
         </div>
-        
+
         <div className="setup-cta">
-          <Link to="/create-goal" className="btn btn-primary btn-large">
+          <Link to="/setup-goal" className="btn btn-primary btn-large">
             Add Your First Goal
           </Link>
           <p className="setup-note">

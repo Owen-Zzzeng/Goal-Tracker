@@ -11,13 +11,13 @@ export function LandingPage() {
           Login
         </Link>
       </div>
-      
+
       <div className="landing-content">
         <h1>Transform Your Dreams Into Reality</h1>
         <p className="landing-subtitle">
           Discover your five-year vision and create actionable goals to achieve your biggest dreams
         </p>
-        
+
         <div className="features">
           <div className="feature">
             <div className="feature-icon">🎯</div>
@@ -35,7 +35,7 @@ export function LandingPage() {
             <p>Monitor your journey with strategies and action steps</p>
           </div>
         </div>
-        
+
         <div className="cta-section">
           <Link to="/vision" className="btn btn-primary btn-large">
             Start Your Five-Year Fantasy
@@ -46,5 +46,3 @@ export function LandingPage() {
     </div>
   )
 }
-
-

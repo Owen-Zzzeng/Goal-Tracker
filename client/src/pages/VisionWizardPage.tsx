@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import api from '../lib/api'
 import { useNavigate } from 'react-router-dom'
 
 const prompts = [
@@ -28,26 +27,25 @@ export function VisionWizardPage() {
 
   async function submitAll() {
     try {
-      console.log('Submitting vision data:', form)
-      
-      // Store vision data in localStorage only (no database save yet)
       localStorage.setItem('userVision', JSON.stringify(form))
-      console.log('Vision saved to localStorage')
-      
       navigate('/goals-setup')
     } catch (err: any) {
-      console.error('Vision save error:', err)
       setError(err?.message || 'Failed to save vision')
     }
   }
 
   function next() {
-    if (idx < prompts.length - 1) setIdx(idx + 1)
-    else submitAll()
+    if (idx < prompts.length - 1) {
+      setIdx(idx + 1)
+    } else {
+      submitAll()
+    }
   }
 
   function prev() {
-    if (idx > 0) setIdx(idx - 1)
+    if (idx > 0) {
+      setIdx(idx - 1)
+    }
   }
 
   return (
@@ -71,6 +69,7 @@ export function VisionWizardPage() {
           value={form[current.key] || ''}
           onChange={(e) => setForm((f) => ({ ...f, [current.key]: e.target.value }))}
           placeholder="Take your time to reflect on this question..."
+          rows={6}
         />
       </div>
 
@@ -94,6 +93,3 @@ export function VisionWizardPage() {
     </div>
   )
 }
-
-
-
